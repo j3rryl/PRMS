@@ -17,6 +17,24 @@ function getUser($user) {
     mysqli_close($conn);
     return $userDetails;
 }
+function getUsersHealth($user) {
+    require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
+
+    $sql = "SELECT * FROM body_health WHERE user_id= ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $user);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    
+    $userDetails = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $userDetails[] = $row;
+    }
+
+    mysqli_close($conn);
+    return $userDetails;
+}
+
 
 function updateAccount($user){
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
