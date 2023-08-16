@@ -1,0 +1,57 @@
+1. Magnesium (Mg2+):
+   Target Range: 1.5-2.5 mg/dL
+
+2. Phosphate (PO4-):
+   Target Range: 2.5-4.5 mg/d
+
+3. Potassium (K+):
+   Target Range: 3.5-5.0 mEq/L
+
+4. Sodium (Na+):
+   Target Range: 135-145 mEq/L
+
+5. Calcium (Ca2+):
+   Target Range: 8.4-10.2 mg/dL
+
+6. Blood Flow Rate:
+   Target Range: Typically around 200-500 mL/min, depending on the patient's vascular access.
+
+7. Dialysate Flow Rate:
+   Target Range: Usually around 500 mL/min
+
+8. Urea (Blood Urea Nitrogen - BUN):
+   Target Range: 10-20 mg/dL (may vary based on individual patient factors).
+
+9. Creatinine:
+   Target Range: 0.6-1.2 mg/dL (may vary based on individual patient factors).
+
+10. Hemoglobin:
+    Target Range: 11-12 g/dL (individualized based on patient characteristics).
+
+11. Blood Pressure:
+    Target Range: Pre-dialysis systolic BP <140 mm Hg, post-dialysis BP may drop but should not decrease excessively.
+
+12. Heart Rate:
+    Target Range: Generally within the patient's normal range. Significant variations may require further assessment.
+
+13. Body Weight:
+    Target Range: Weight loss during dialysis session should be monitored and managed. Rapid fluid removal can lead to complications.
+
+14. Temperature:
+    Target Range: Generally within the normal body temperature range (37).
+
+15. Oxygen Saturation:
+    Target Range: Maintained within normal levels (>95%).
+
+These parameters should make up the parameters that will produce a patients monthly dialysis report.
+
+However when the patient goes for dialysis sessions which is twice a week. The nurse at the triage should enter the only the following;
+ 1. Hemoglobin
+ 2. Body Weight
+ 3. Blood Pressure
+ 4. Temperature
+ 5. Oxygen Saturation.
+
+When the patient leaves the clinic after the 4hr dialysis session, the nurse should enter the following information
+ 1. Body weight
+ 2. Blood Pressure.

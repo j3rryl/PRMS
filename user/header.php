@@ -42,7 +42,7 @@ session_start();
             ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-            <li><a class="dropdown-item" href="update_account.php">Update Account</a></li>
+            <li><a class="dropdown-item" href="account.php">Update Account</a></li>
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
           </ul>
         </li>

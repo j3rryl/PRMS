@@ -16,9 +16,19 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   
 }
 ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<link href="../assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+<!-- Responsive datatable examples -->
+<link href="../assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"> -->
+<!-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script> -->
+
 <style>
     .table-col{
         font-weight: 400 !important;
@@ -29,13 +39,10 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 <div class="mx-3 mt-5 card p-3 bg-white shadow-sm">
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">First Time</button>
+    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Bi-monthly Tests</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Second Time</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Third Time</button>
+    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Hospital Tests</button>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
@@ -47,9 +54,9 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                 <thead>
                 <tr>
                     <!-- <th scope="col">Name</th> -->
-                    <th scope="col">Haemoglobin</th>
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
+                    <th scope="col">Haemoglobin</th>
                     <th scope="col">Temperature</th>
                     <th scope="col">Oxygen saturation</th>
                     <th scope="col">Date</th>
@@ -63,11 +70,11 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         ?>
                         <tr>
                         <!-- <th scope="col">Name</th> -->
-                        <th class="table-col"><?php echo $userDetail['body_weight']?></th>
-                        <th class="table-col"><?php echo $userDetail['blood_pressure']?></th>
-                        <th class="table-col"><?php echo $userDetail['haemoglobin']?></th>
-                        <th class="table-col"><?php echo $userDetail['temperature']?></th>
-                        <th class="table-col"><?php echo $userDetail['oxygen_saturation']?></th>
+                        <th class="table-col"><?php echo $userDetail['body_weight']." kg"?></th>
+                        <th class="table-col"><?php echo $userDetail['blood_pressure']." mm Hg"?></th>
+                        <th class="table-col"><?php echo $userDetail['haemoglobin']." g/dL"?></th>
+                        <th class="table-col"><?php echo $userDetail['temperature']."°C"?></th>
+                        <th class="table-col"><?php echo $userDetail['oxygen_saturation']."%"?></th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($userDetail['date']))?></th>
                         <th class="table-col">
                                 <a role="button" <?php echo "href=view_report.php?id=$health_id"  ?>
@@ -90,7 +97,6 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   
   </div>
   <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
 </div>
 </div>
 

@@ -20,7 +20,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   $degree = $userDetails["degree"];
 }
  ?>
-<div class="container mt-5 card p-3">
+<div class="mx-3 mt-5 card p-3">
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account Details</button>
@@ -85,7 +85,6 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 <div class="tab-pane fade card p-3" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 <!--  -->
 <form action="/PRMS/db/operations/updateAccountHandler.php" method="post">
-    <h5>Update Account</h5>
     <?php 
       if (isset($_SESSION['success_message'])) { 
       ?>
@@ -111,11 +110,11 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   <input type="hidden" name="act" value="<?php echo $_SESSION["username"]; ?>"/>
     <div class="col-md-6">
       <label for="form-label">Username</label>
-      <input type="text" class="form-control mb-3" name="username" placeholder="Username" value="<?php echo $username; ?>" required/>
+      <input type="text" class="form-control mb-3" readonly name="username" placeholder="Username" value="<?php echo $username; ?>" required/>
     </div>
     <div class="col-md-6">
       <label for="form-label">Password</label>
-      <input type="password" name="password" class="form-control mb-3" placeholder="Password" value="<?php echo $password; ?>" required/>
+      <input type="password" name="password" class="form-control mb-3" placeholder="Password" required/>
     </div>
   </div>
   <div class="row">
@@ -135,16 +134,10 @@ if (session_id() != '' && isset($_SESSION["username"])) {
       <input type="tel" class="form-control mb-3" name="phone" placeholder="Phone Number" value="<?php echo $phone; ?>" required/>
     </div>
     <div class="col-md-6">
-      <label for="form-label">Degree</label>
-      <input type="text" name="degree" class="form-control mb-3" placeholder="Degree" value="<?php echo $degree; ?>" required/>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
       <label for="form-label">Address</label>
       <input type="text" class="form-control mb-3" name="address" placeholder="Address" value="<?php echo $address; ?>" required/>
     </div>
-    
+      <input type="text" hidden name="degree" class="form-control mb-3" placeholder="Degree" value="<?php echo $degree; ?>" required/>
   </div>
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-outline-success">Save</button>
