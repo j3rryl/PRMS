@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["username"] = $uname;
             $_SESSION["type"] = $row["type"];
             
-            if($row['type'] == 'admin') {
-                header('Location: /PRMS/admin/admin.php'); // Redirect to admin dashboard
+            if($row['type'] == 'nurse') {
+                header('Location: /PRMS/control/user.php'); // Redirect to admin dashboard
                 exit;
             } elseif ($row['type'] == 'normal') {
                 // Your logging logic
