@@ -34,12 +34,12 @@ function getUserHealth($id) {
     mysqli_close($conn);
     return $userDetails;
 }
-function getUsersHealth($user) {
+function getUsersHealth($user, $test_type="before") {
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
 
-    $sql = "SELECT * FROM body_health WHERE user_id= ?";
+    $sql = "SELECT * FROM body_health WHERE user_id= ? AND test_type= ?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $user);
+    mysqli_stmt_bind_param($stmt, "is", $user, $test_type);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     

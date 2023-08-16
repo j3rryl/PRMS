@@ -11,6 +11,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   $id = $_GET['id'];
   $userDetail = getUserHealth($id);
 //   echo print_r($userDetails);
+  $test_type = $userDetail['test_type'];
   $body_weight = $userDetail['body_weight'];
   $blood_pressure = $userDetail['blood_pressure'];
   $heart_rate = $userDetail['heart_rate'];
@@ -75,13 +76,15 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Health Results</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Misc</button>
+    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Miscellaneous</button>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
     <div class="container">
         <div class="card p-3 shadow-sm">
+          <?php if($test_type=="monthly"){
+          ?>
             <div class="row mb-3">
               <div class="col-md-4">
                 <h6 for="form-label">Magnesium</h6>
@@ -294,6 +297,10 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                 </span>
               </div>
             </div>
+
+            <?php
+            }
+            ?>
             <!--  -->
             <div class="row mb-3">
               <div class="col-md-4">
@@ -394,18 +401,18 @@ if (session_id() != '' && isset($_SESSION["username"])) {
               <div class="col-md-4">
                 <h6 for="form-label">Temperature</h6><?php echo $temperature."°C"; ?></p>
                 <span class="text-capitalize status-color <?php 
-                  if($temperature<32){
+                  if($temperature<36){
                     echo "low";
-                  } else if($temperature<42){
+                  } else if($temperature<38){
                     echo "normal";
                   } else {
                     echo "high";
                   }
                   ?>">
                   <?php 
-                  if($temperature<32){
+                  if($temperature<36){
                     echo "low";
-                  } else if($temperature<42){
+                  } else if($temperature<38){
                     echo "normal";
                   } else {
                     echo "high";
@@ -442,7 +449,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     </div>
   
   </div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Misc</div>
+  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Miscellaneous</div>
 </div>
 </div>
 
