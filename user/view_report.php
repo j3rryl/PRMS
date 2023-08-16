@@ -348,6 +348,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                   ?>
                 </span>
               </div>
+              <?php if($test_type=="before"){
+              ?>
               <div class="col-md-4">
                 <h6 for="form-label">Heart Rate</h6>
                 <p><?php echo $heart_rate." bpm"; ?></p>
@@ -444,6 +446,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                 </span>
               </div>
             </div>
+            <?php }?>
             <!--  -->
         </div>
     </div>
