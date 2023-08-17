@@ -39,7 +39,7 @@ function getUserById($user) {
 function getPatients() {
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
 
-    $sql = "SELECT * FROM user_account WHERE type='normal'";
+    $sql = "SELECT * FROM user_account WHERE type='patient'";
     $result = mysqli_query($conn, $sql);
     
     $userDetails = [];
