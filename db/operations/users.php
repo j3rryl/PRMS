@@ -406,6 +406,89 @@ function getMonthlyUserCounts() {
     mysqli_close($conn);
     return $monthlyCounts;
 }
+function deleteTestById() {
+    require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
+
+    if (isset($_POST['id'])) {
+        $id = $_POST['id'];
+    // Using a prepared statement to prevent SQL injection
+    $stmt = $conn->prepare("DELETE FROM body_health WHERE id = ?");
+    $stmt->bind_param("s", $id);
+
+    if ($stmt->execute()) {
+        session_start();
+        $_SESSION['success_message'] = "Test deleted successfully.";
+        header('Location: /PRMS/admin/reports.php');
+        exit;
+    } else {
+        session_start();
+        $_SESSION['error_message'] = "Error deleting test.";
+        header('Location: /PRMS/admin/reports.php');
+        exit;
+    }
+    } else {
+        echo "Not set";
+    }
+}
+
+
+function deleteUserByUsername() {
+    require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
+
+    if (isset($_POST['username'])) {
+        $username = $_POST['username'];
+
+        // Start a transaction to ensure data integrity
+        $conn->begin_transaction();
+
+        // First, get the user's ID
+        $stmt = $conn->prepare("SELECT ID FROM user_account WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        // Ensure the user exists before proceeding
+        if ($user) {
+            $userId = $user['ID'];
+
+            // Delete associated records in the body_health table
+            $stmt = $conn->prepare("DELETE FROM body_health WHERE user_id = ?");
+            $stmt->bind_param("i", $userId);
+            if (!$stmt->execute()) {
+                // Rollback if there's an error and exit
+                $conn->rollback();
+                session_start();
+                $_SESSION['error_message'] = "Error deleting associated health records.";
+                header('Location: /PRMS/admin/reports.php');
+                exit;
+            }
+
+            // Delete the user from the user_account table
+            $stmt = $conn->prepare("DELETE FROM user_account WHERE username = ?");
+            $stmt->bind_param("s", $username);
+            if ($stmt->execute()) {
+                // Commit the transaction if both delete operations are successful
+                $conn->commit();
+                session_start();
+                $_SESSION['success_message'] = "User deleted successfully.";
+                header('Location: /PRMS/admin/reports.php');
+                exit;
+            } else {
+                // Rollback if there's an error and exit
+                $conn->rollback();
+                session_start();
+                $_SESSION['error_message'] = "Error deleting user.";
+                header('Location: /PRMS/admin/reports.php');
+                exit;
+            }
+        } else {
+            echo "User not found.";
+        }
+    } else {
+        echo "Username not set.";
+    }
+}
 
 
 
