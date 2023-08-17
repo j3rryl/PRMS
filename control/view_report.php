@@ -12,6 +12,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   $userDetail = getUserHealth($id);
 //   echo print_r($userDetails);
   $test_type = $userDetail['test_type'];
+  $fullname = $userDetail['fullname'];
   $body_weight = $userDetail['body_weight'];
   $blood_pressure = $userDetail['blood_pressure'];
   $heart_rate = $userDetail['heart_rate'];
@@ -71,18 +72,45 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 </style>
 
 <div class="mx-3 mt-5 card p-3 bg-white shadow-sm">
+<?php 
+      if (isset($_SESSION['success_message'])) { 
+      ?>
+      <div class="alert alert-success mt-3" role="alert">
+          <?php 
+          echo $_SESSION['success_message']; 
+          unset($_SESSION['success_message']);
+          ?>
+      </div>
+      <?php 
+      } else if (isset($_SESSION['error_message'])) { 
+        ?>
+        <div class="alert alert-danger mt-3" role="alert">
+            <?php 
+            echo $_SESSION['error_message']; 
+            unset($_SESSION['error_message']);
+            ?>
+        </div>
+        <?php 
+        }
+      ?>
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Health Results</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Miscellaneous</button>
+    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit results</button>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
     <div class="container">
         <div class="card p-3 shadow-sm">
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <h6>Full name</h6>
+              <span class="text-capitalize"><?php echo $fullname; ?></span>
+            </div>
+          </div>
           <?php if($test_type=="monthly"){
           ?>
             <div class="row mb-3">
@@ -328,7 +356,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                 
               </div>
               <div class="col-md-4">
-                <h6 for="form-label">Blood Pressure</h6><?php echo $blood_pressure." mm Hg"; ?></p>
+                <h6 for="form-label">Blood Pressure</h6>
+                <p><?php echo $blood_pressure." mm Hg"; ?></p>
                 <span class="text-capitalize status-color <?php 
                   if($blood_pressure<120){
                     echo "low";
@@ -349,8 +378,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                   ?>
                 </span>
               </div>
-              <?php if($test_type=="before"){
-              ?>
+              
               <div class="col-md-4">
                 <h6 for="form-label">Heart Rate</h6>
                 <p><?php echo $heart_rate." bpm"; ?></p>
@@ -376,6 +404,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
               </div>
             </div>
             <!--  -->
+            <?php if($test_type=="before" || $test_type=="monthly"){
+              ?>
             <div class="row">
             <div class="col-md-4">
                 <h6 for="form-label">Haemoglobin</h6>
@@ -402,7 +432,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
               </div>
               
               <div class="col-md-4">
-                <h6 for="form-label">Temperature</h6><?php echo $temperature."°C"; ?></p>
+                <h6 for="form-label">Temperature</h6>
+                <p><?php echo $temperature."°C"; ?></p>
                 <span class="text-capitalize status-color <?php 
                   if($temperature<36){
                     echo "low";
@@ -453,7 +484,117 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     </div>
   
   </div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Miscellaneous</div>
+  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+  
+  <div class="container">
+        <div class="card p-3 shadow-sm">
+        <form action="/PRMS/db/operations/updateTestHandler.php" method="post">
+        <input hidden type="text" class="form-control" name="id" id="id" value=<?php echo $id?> required>
+          <?php if($test_type=="monthly"){
+          ?>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="form-label">Magnesium</label>
+                <input type="text" class="form-control" name="magnesium" id="magnesium" value=<?php echo $magnesium?> required>
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Phosphate</label>
+                <input type="text" class="form-control" name="phosphate" id="phosphate" value=<?php echo $phosphate?> required>
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Potassium</label>
+                <input type="text" class="form-control" name="potassium" id="potassium" value=<?php echo $potassium?> required>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="form-label">Sodium</label>
+                <input type="text" class="form-control" name="sodium" id="sodium" value=<?php echo $sodium?> required>
+
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Calcium</label>
+                <input type="text" class="form-control" name="calcium" id="calcium" value=<?php echo $calcium?> required>
+
+              </div>
+            <div class="col-md-4">
+              <label for="form-label">Blood Flow Rate</label>
+              <input type="text" class="form-control" name="blood_flow_rate" id="blood_flow_rate" value=<?php echo $blood_flow_rate?> required>
+
+            </div>
+          </div>
+          <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="form-label">Dialysate Flow Rate</label>
+                <input type="text" class="form-control" name="dialysate_flow_rate" id="dialysate_flow_rate" value=<?php echo $dialysate_flow_rate?> required>
+
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Urea</label><?php echo $urea." mg/dL"; ?></p>
+                <input type="text" class="form-control" name="urea" id="urea" value=<?php echo $urea?> required>
+
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Creatinine</label>
+                <input type="text" class="form-control" name="creatinine" id="creatinine" value=<?php echo $creatinine?> required>
+
+              </div>
+            </div>
+
+            <?php
+            }
+            ?>
+            <!--  -->
+            <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="form-label">Body Weight</label>
+                <input type="text" class="form-control" name="body_weight" id="body_weight" value=<?php echo $body_weight?> required>
+
+                
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Blood Pressure</label>
+                <input type="text" class="form-control" name="blood_pressure" id="blood_pressure" value=<?php echo $blood_pressure?> required>
+
+              </div>
+              
+              <div class="col-md-4">
+                <label for="form-label">Heart Rate</label>
+                <input type="text" class="form-control" name="heart_rate" id="heart_rate" value=<?php echo $heart_rate?> required>
+
+              </div>
+            </div>
+            <!--  -->
+            <?php if($test_type=="before"||$test_type=="monthly"){
+              ?>
+            <div class="row">
+            <div class="col-md-4">
+                <h6 for="form-label">Haemoglobin</h6>
+                <input type="text" class="form-control" name="haemoglobin" id="haemoglobin" value=<?php echo $haemoglobin?> required>
+
+              </div>
+              
+              <div class="col-md-4">
+                <label for="form-label">Temperature</label>
+                <input type="text" class="form-control" name="temperature" id="temperature" value=<?php echo $temperature?> required>
+
+              </div>
+              <div class="col-md-4">
+                <label for="form-label">Oxygen Saturation</label>
+                <input type="text" class="form-control" name="oxygen_saturation" id="oxygen_saturation" value=<?php echo $oxygen_saturation?> required>
+
+              </div>
+            </div>
+            <?php }?>
+            <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-success">Save</button>
+            </div>
+              </form>
+            <!--  -->
+        </div>
+    </div>
+
+  </div>
 </div>
 </div>
 

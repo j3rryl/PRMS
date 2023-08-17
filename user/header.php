@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+if(isset($_SESSION) && $_SESSION["type"]!="normal") {
+  header('Location: /PRMS/user/unauthorized.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

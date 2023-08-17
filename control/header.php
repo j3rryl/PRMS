@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(isset($_SESSION) && $_SESSION["type"]!="nurse") {
+  header('Location: /PRMS/control/unauthorized.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

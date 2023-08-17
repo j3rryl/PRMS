@@ -1,5 +1,13 @@
 
-<?php require('header.php')?>
+<?php 
+require('header.php');
+include '../db/operations/users.php';
+$monthlyData = getMonthlyTestCounts();
+$months = array_keys($monthlyData);
+$counts = array_values($monthlyData);
+?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+
 <style>
     .cover-image{
     height: 500px !important;
@@ -35,9 +43,68 @@
     color: #fff !important;
   }
 </style>
-    <div class="container mt-3">
-       Graphs
+    <div class="container card p-3 mt-3">
+  <h6>Analytics for tests per month.</h6>
+  <div class="row gap-2 mt-3">
+  <div class="col card p-2">
+    <p>Line Chart</p>
+    <canvas id="lineChart"></canvas>
+  </div>
+  <div class="col card p-2">
+    <p>Bar chart</p>
+    <canvas id="barChart"></canvas>
+  </div>
+
+</div>
 
     </div>
+    <script>
+var ctx = document.getElementById('lineChart').getContext('2d');
+var barCtx = document.getElementById('barChart').getContext('2d');
+
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels:  <?php echo json_encode($months); ?>, // Static months for example
+        datasets: [{
+            label: 'Tests per month.',
+            data:  <?php echo json_encode($counts); ?>, // Static ticket counts for example
+            backgroundColor: 'rgba(0, 128, 128, 0.5)',
+            borderColor: '#008080',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+
+var barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+        labels:  <?php echo json_encode($months); ?>, // Static months for example
+        datasets: [{
+            label: 'Tests per month.',
+            data:  <?php echo json_encode($counts); ?>, // Static ticket counts for example
+            backgroundColor: 'rgba(0, 128, 128, 0.5)',
+            borderColor: '#008080',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
 <?php require('footer.php')?>
 

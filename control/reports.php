@@ -18,7 +18,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   $befores = getAllUsersHealth("before");
   $afters = getAllUsersHealth("after");
   $monthlys = getAllUsersHealth("monthly");
-  $users = getAllUsers();
+  $users = getPatients();
 
 
 
@@ -101,7 +101,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
                 <thead>
                 <tr>
-                    <!-- <th scope="col">Name</th> -->
+                    <th scope="col">Name</th>
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
                     <th scope="col">Haemoglobin</th>
@@ -117,7 +117,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         $health_id = $before['id'];
                         ?>
                         <tr>
-                        <!-- <th scope="col">Name</th> -->
+                        <th class="table-col"><?php echo $before['fullname']?></th>
                         <th class="table-col"><?php echo $before['body_weight']." kg"?></th>
                         <th class="table-col"><?php echo $before['blood_pressure']." mm Hg"?></th>
                         <th class="table-col"><?php echo $before['haemoglobin']." g/dL"?></th>
@@ -151,9 +151,10 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
                 <thead>
                 <tr>
-                    <!-- <th scope="col">Name</th> -->
+                    <th scope="col">Name</th>
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
+                    <th scope="col">Heart rate</th>
                     <th scope="col">Date</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -164,9 +165,10 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         $health_id = $after['id'];
                         ?>
                         <tr>
-                        <!-- <th scope="col">Name</th> -->
+                        <th class="table-col"><?php echo $after['fullname']?></th>
                         <th class="table-col"><?php echo $after['body_weight']." kg"?></th>
                         <th class="table-col"><?php echo $after['blood_pressure']." mm Hg"?></th>
+                        <th class="table-col"><?php echo $after['heart_rate']." bpm"?></th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($after['date']))?></th>
                         <th class="table-col">
                                 <a role="button" <?php echo "href=view_report.php?id=$health_id"  ?>
@@ -197,7 +199,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
                 <thead>
                 <tr>
-                    <!-- <th scope="col">Name</th> -->
+                    <th scope="col">Name</th>
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
                     <th scope="col">Haemoglobin</th>
@@ -213,7 +215,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         $health_id = $monthly['id'];
                         ?>
                         <tr>
-                        <!-- <th scope="col">Name</th> -->
+                        <th class="table-col"><?php echo $monthly['fullname']?></th>
                         <th class="table-col"><?php echo $monthly['body_weight']." kg"?></th>
                         <th class="table-col"><?php echo $monthly['blood_pressure']." mm Hg"?></th>
                         <th class="table-col"><?php echo $monthly['haemoglobin']." g/dL"?></th>
@@ -338,7 +340,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                 <label for="">Blood pressure</label>
                 <input type="number" steps="0.1" name="blood_pressure" class="form-control" id="blood_pressure" required>
             </div>
-            <div class="col-md-4" id="row4">
+            <div class="col-md-4">
                 <label for="">Heart rate</label>
                 <input type="number" steps="0.1" name="heart_rate" class="form-control" id="heart_rate" required>
             </div>
