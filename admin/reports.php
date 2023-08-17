@@ -117,8 +117,11 @@ if (session_id() != '' && isset($_SESSION["username"])) {
         }
       ?>
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+<li class="nav-item" role="presentation">
+    <button class="nav-link active" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button" role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
+  </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Session before dialysis</button>
+    <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Session before dialysis</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Session after dialysis</button>
@@ -126,12 +129,10 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-monthly-tab" data-bs-toggle="pill" data-bs-target="#pills-monthly" type="button" role="tab" aria-controls="pills-monthly" aria-selected="false">Monthly dialysis</button>
   </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button" role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
-  </li>
+  
 </ul>
 <div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+  <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
     <div class="container">
         <div class="card p-3 shadow-sm">
             <table class="table align-middle datatable dt-responsive table-check" id="before"
@@ -279,7 +280,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     </div>
 
   </div>
-<div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+<div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
     <!--  -->
     <div class="card p-3 shadow-sm">
             <table class="table align-middle datatable dt-responsive table-check" id="user-table"
