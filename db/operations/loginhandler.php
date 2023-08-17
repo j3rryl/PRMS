@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if($row['type'] == 'admin') {
                 header('Location: /PRMS/admin/index.php'); // Redirect to admin dashboard
                 exit;
-            }else if($row['type'] == 'normal') {
+            }else if($row['type'] == 'patient') {
                 // Your logging logic
                 $sql = "INSERT INTO log (user, time, date, type) VALUES (?, NOW(), CURDATE(), ?)";
                 $stmt = mysqli_prepare($conn, $sql);

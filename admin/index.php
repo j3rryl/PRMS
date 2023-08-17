@@ -63,7 +63,7 @@ $userCounts = array_values($userData);
 </div>
 
 <div class="container card p-3">
-  <h6>Analytics for users added.</h6>
+  <h6>Analytics for new patients.</h6>
   <div class="row gap-2 mt-3">
         <div class="col card p-2">
             <p>Line Chart</p>
@@ -130,7 +130,7 @@ var umyChart = new Chart(uctx, {
     data: {
         labels:  <?php echo json_encode($userMonths); ?>, // Static months for example
         datasets: [{
-            label: 'Users per month.',
+            label: 'Patients per month.',
             data:  <?php echo json_encode($userCounts); ?>, // Static ticket counts for example
             backgroundColor: 'rgba(0, 128, 128, 0.5)',
             borderColor: '#008080',
@@ -151,7 +151,7 @@ var ubarChart = new Chart(ubarCtx, {
     data: {
         labels:  <?php echo json_encode($userMonths); ?>, // Static months for example
         datasets: [{
-            label: 'Users per month.',
+            label: 'Patients per month.',
             data:  <?php echo json_encode($userCounts); ?>, // Static ticket counts for example
             backgroundColor: 'rgba(0, 128, 128, 0.5)',
             borderColor: '#008080',

@@ -60,7 +60,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     vertical-align: middle;
     border-radius: 10px;
   }
-    .normal {
+    .patient {
     background-color: rgba(52, 152, 219, 0.2) !important;
     color: rgb(52, 152, 219);
   }
@@ -485,8 +485,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     <option value="nurse">
                     Nurse
                     </option>
-                    <option value="normal" selected>
-                    Normal
+                    <option value="patient" selected>
+                    Patient
                     </option>
                 </select>
             </div>

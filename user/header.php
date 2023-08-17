@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION) && $_SESSION["type"]!="normal") {
+if(isset($_SESSION) && $_SESSION["type"]!="patient") {
   header('Location: /PRMS/user/unauthorized.php');
 }
 ?>

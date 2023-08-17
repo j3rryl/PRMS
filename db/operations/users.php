@@ -384,9 +384,10 @@ function getMonthlyUserCounts() {
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
 
     $sql = "SELECT COUNT(ID) as test_count, MONTH(date_added) as month, YEAR(date_added) as year 
-            FROM user_account 
+            FROM user_account WHERE type='patient'
             GROUP BY YEAR(date_added), MONTH(date_added)
-            ORDER BY YEAR(date_added), MONTH(date_added)";
+            ORDER BY YEAR(date_added), MONTH(date_added)
+            ";
     
     $result = mysqli_query($conn, $sql);
     
