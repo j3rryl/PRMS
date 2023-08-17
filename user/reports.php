@@ -116,6 +116,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     <!-- <th scope="col">Name</th> -->
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
+                    <th scope="col">Heart rate</th>
                     <th scope="col">Date</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -129,6 +130,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <!-- <th scope="col">Name</th> -->
                         <th class="table-col"><?php echo $after['body_weight']." kg"?></th>
                         <th class="table-col"><?php echo $after['blood_pressure']." mm Hg"?></th>
+                        <th class="table-col"><?php echo $after['heart_rate']." bpm"?></th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($after['date']))?></th>
                         <th class="table-col">
                                 <a role="button" <?php echo "href=view_report.php?id=$health_id"  ?>

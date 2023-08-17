@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["type"] = $row["type"];
             
             if($row['type'] == 'nurse') {
-                header('Location: /PRMS/control/user.php'); // Redirect to admin dashboard
+                header('Location: /PRMS/control/index.php'); // Redirect to admin dashboard
                 exit;
             } elseif ($row['type'] == 'normal') {
                 // Your logging logic
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt = mysqli_prepare($conn, $sql);
                 mysqli_stmt_bind_param($stmt, "ss", $uname, $row['type']);
                 if (mysqli_stmt_execute($stmt)) {
-                    header('Location: /PRMS/user/user.php'); // Redirect to user dashboard
+                    header('Location: /PRMS/user/index.php'); // Redirect to user dashboard
                     exit;
                 } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
