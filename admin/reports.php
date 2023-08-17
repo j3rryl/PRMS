@@ -48,6 +48,30 @@ if (session_id() != '' && isset($_SESSION["username"])) {
         font-weight: 400 !important;
         font-size:1em !important;
     }
+    .status-color{
+    display: inline-block;
+    padding: 10px !important;
+    font-size: 80% !important;
+    font-weight: bold;
+    /* line-height: 1; */
+    width: 6rem;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 10px;
+  }
+    .normal {
+    background-color: rgba(52, 152, 219, 0.2) !important;
+    color: rgb(52, 152, 219);
+  }
+  .nurse {
+    background-color: rgba(155, 89, 182,0.2);
+    color: rgb(155, 89, 182);
+  }
+  .admin {
+    background-color: rgba(39, 174, 96, 0.2);
+    color: rgb(39, 174, 96);
+  }
 </style>
 
 
@@ -267,6 +291,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     <th scope="col">Email</th>
                     <th scope="col">Address</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">Role</th>
                     <th scope="col">Date of birth</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -282,6 +307,11 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <th class="table-col"><?php echo $allUser['email']?></th>
                         <th class="table-col"><?php echo $allUser['address']?></th>
                         <th class="table-col"><?php echo $allUser['phone']?></th>
+                        <th class="table-col">
+                        <span class="text-capitalize status-color <?php echo $allUser['type']?>">
+                        <?php echo $allUser['type']?>
+                        </span>
+                        </th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($allUser['dob']))?></th>
                         <th class="table-col">
                                 <a role="button" <?php echo "href=view_user.php?id=$allUser_id"  ?>
