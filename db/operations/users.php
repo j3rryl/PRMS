@@ -18,6 +18,24 @@ function getUser($user) {
     return $userDetails;
 }
 
+function getUserById($user) {
+    require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
+
+    $sql = "SELECT * FROM user_account WHERE ID= ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $user);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    
+    $userDetails = [];
+    if ($row = mysqli_fetch_assoc($result)) {
+        $userDetails = $row;
+    }
+
+    mysqli_close($conn);
+    return $userDetails;
+}
+
 function getPatients() {
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
 
@@ -105,39 +123,97 @@ WHERE body_health.test_type = ?;";
     return $userDetails;
 }
 
-function updateAccount($user){
+function updateAccount() {
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
 
-    if(isset($_POST['username'], $_POST["password"], $_POST["fullname"], $_POST["address"], $_POST["email"], $_POST["phone"], $_POST["degree"])) {
+    session_start();  // Ensure session is started
+
+    if (isset($_POST['username'], $_POST["password"], $_POST["fullname"], $_POST["address"], $_POST["email"], $_POST["phone"])) {
         $username = $_POST['username'];
-        $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+        // Check if password is being changed
+        $password = (isset($_POST["password"]) && !empty($_POST["password"])) 
+                     ? password_hash($_POST["password"], PASSWORD_DEFAULT)
+                     : null;
+
         $fullname = $_POST["fullname"];
         $address = $_POST["address"];
         $email = $_POST["email"];
         $phone = $_POST["phone"];
-        $degree = $_POST["degree"];
+
+        if ($password) {
+            $stmt = $conn->prepare("UPDATE user_account SET password=?, fullname=?, address=?, email=?, phone=? WHERE username=?");
+            $stmt->bind_param("ssssss", $password, $fullname, $address, $email, $phone, $username);
+        } else {
+            $stmt = $conn->prepare("UPDATE user_account SET fullname=?, address=?, email=?, phone=? WHERE username=?");
+            $stmt->bind_param("sssss", $fullname, $address, $email, $phone, $username);
+        }
+
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "User updated successfully.";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        } else {
+            $_SESSION['error_message'] = "Error updating user.";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+    } else {
+        $_SESSION['error_message'] = "Required inputs missing.";
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+}
 
 
-        // Using a prepared statement
-        $stmt = $conn->prepare("UPDATE user_account SET username=?, password=?, fullname=?, address=?, email=?, phone=?, degree=? WHERE username=?");
-        $stmt->bind_param("ssssssss", $username, $password, $fullname, $address, $email, $phone, $degree, $user);
+function newUser(){
+    require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
+
+    if(isset($_POST['type'], $_POST["username"], $_POST["fullname"], $_POST["password"], $_POST["email"], $_POST["address"], $_POST["phone"], $_POST["dob"])) {
+        
+        $type = $_POST['type'];
+        $username = $_POST["username"];
+        $fullname = $_POST["fullname"]; 
+        $password = password_hash($_POST["password"], PASSWORD_DEFAULT);  // Hash the password
+        $email = $_POST["email"]; 
+        $address = $_POST["address"]; 
+        $phone = $_POST["phone"]; 
+        $dob = $_POST["dob"];
+        
+        // Check if username exists
+        $stmt = $conn->prepare("SELECT ID FROM `user_account` WHERE `username` = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        if ($stmt->num_rows > 0) {
+            session_start();
+            $_SESSION['error_message'] = "Username already exists.";
+            header('Location: /PRMS/admin/reports.php');
+            exit;
+        }
+
+        // Using a prepared statement for inserting user
+        $stmt = $conn->prepare("INSERT INTO `user_account` (`ID`,`type`, `username`, `fullname`, `password`, `email`, `address`, `phone`, `dob`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $type, $username, $fullname, $password, $email, $address, $phone, $dob);
         
         if ($stmt->execute()) {
-            session_start();  // Ensure session is started
-            $_SESSION['success_message'] = "User updated successfully.";
-            header('Location: /PRMS/user/account.php');
+            session_start();
+            $_SESSION['success_message'] = "User added successfully.";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         } else {
             session_start();
-            $_SESSION['error_message'] = "Error updating user.";
-            header('Location: /PRMS/user/account.php');
+            $_SESSION['error_message'] = "Error adding user.";
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
     } else {
         // Handle case where not all expected inputs are set.
-        // Redirect to error page or show an error message.
+        echo "Some inputs are missing."; // You can provide a more specific error message or redirection here.
     }
 }
+
 
 function newTest($user){
     require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
@@ -187,12 +263,12 @@ function newTest($user){
         if ($stmt->execute()) {
             session_start();  // Ensure session is started
             $_SESSION['success_message'] = "Test added successfully.";
-            header('Location: /PRMS/control/reports.php');
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         } else {
             session_start();
             $_SESSION['error_message'] = "Error adding test.";
-            header('Location: /PRMS/control/reports.php');
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
     } else {
@@ -263,12 +339,12 @@ $temperature, $oxygen_saturation, $id);
         if ($stmt->execute()) {
             session_start();
             $_SESSION['success_message'] = "Test updated successfully.";
-            header('Location: /PRMS/control/view_report.php?id='.$id);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         } else {
             session_start();
             $_SESSION['error_message'] = "Error updating test.";
-            header('Location: /PRMS/control/view_report.php?id='.$id);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit;
         }
     } else {
@@ -284,6 +360,33 @@ function getMonthlyTestCounts() {
             FROM body_health 
             GROUP BY YEAR(date), MONTH(date)
             ORDER BY YEAR(date), MONTH(date)";
+    
+    $result = mysqli_query($conn, $sql);
+    
+    $monthlyCounts = [];
+    $monthNames = [
+        1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 
+        6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 
+        10 => 'October', 11 => 'November', 12 => 'December'
+    ];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        // $formattedMonth = $monthNames[$row['month']] . " " . $row['year'];  // Example: "April 2023"
+        $formattedMonth = $monthNames[$row['month']];  
+        $monthlyCounts[$formattedMonth] = $row['test_count'];
+    }
+
+    mysqli_close($conn);
+    return $monthlyCounts;
+}
+
+function getMonthlyUserCounts() {
+    require $_SERVER['DOCUMENT_ROOT'].'/PRMS/db/dbcon.php';
+
+    $sql = "SELECT COUNT(ID) as test_count, MONTH(date_added) as month, YEAR(date_added) as year 
+            FROM user_account 
+            GROUP BY YEAR(date_added), MONTH(date_added)
+            ORDER BY YEAR(date_added), MONTH(date_added)";
     
     $result = mysqli_query($conn, $sql);
     

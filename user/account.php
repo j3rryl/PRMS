@@ -17,7 +17,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   $address = $userDetails["address"];
   $email = $userDetails["email"];
   $phone= $userDetails["phone"];
-  $degree = $userDetails["degree"];
+
 }
  ?>
 <div class="mx-3 mt-5 card p-3">
@@ -73,12 +73,11 @@ if (session_id() != '' && isset($_SESSION["username"])) {
       <p class="text-capitalize"><?php echo $phone; ?></p class="text-capitalize">
     </div>
     <div class="col-md-4">
-      <h6 for="form-label">Degree</h6>
-      <p class="text-capitalize"><?php echo $degree; ?></p class="text-capitalize">
-    </div>
-    <div class="col-md-4">
       <h6 for="form-label">Address</h6>
       <p class="text-capitalize"><?php echo $address; ?></p class="text-capitalize">
+    </div>
+    <div class="col-md-4">
+
     </div>
   </div>
 </div>
@@ -137,7 +136,6 @@ if (session_id() != '' && isset($_SESSION["username"])) {
       <label for="form-label">Address</label>
       <input type="text" class="form-control mb-3" name="address" placeholder="Address" value="<?php echo $address; ?>" required/>
     </div>
-      <input type="text" hidden name="degree" class="form-control mb-3" placeholder="Degree" value="<?php echo $degree; ?>" required/>
   </div>
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-outline-success">Save</button>

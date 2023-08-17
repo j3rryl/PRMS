@@ -14,6 +14,8 @@ $users = [];
 if (session_id() != '' && isset($_SESSION["username"])) {
   $user = $_SESSION["username"];
   $user = getUser($user);
+  $allUsers = getAllUsers();
+
   $user_id=$user['ID'];
   $befores = getAllUsersHealth("before");
   $afters = getAllUsersHealth("after");
@@ -50,7 +52,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 
 
 <div class="mx-3 mt-5 card p-3 bg-white shadow-sm">
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-end gap-3">
         <button type="button" 
         class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-pulse" viewBox="0 0 16 16">
@@ -59,7 +61,15 @@ if (session_id() != '' && isset($_SESSION["username"])) {
         <path d="M9.979 5.356a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.926-.08L4.69 10H4.5a.5.5 0 0 0 0 1H5a.5.5 0 0 0 .447-.276l.936-1.873 1.138 3.793a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h.5a.5.5 0 0 0 0-1h-.128L9.979 5.356Z"/>
         </svg>  
         New Test
-</button>
+        </button>
+        <button type="button" 
+        class="btn btn-outline-primary" data-toggle="modal" data-target="#userModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+        </svg> 
+        New User
+        </button>
 </div>
 <?php 
       if (isset($_SESSION['success_message'])) { 
@@ -91,6 +101,9 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-monthly-tab" data-bs-toggle="pill" data-bs-target="#pills-monthly" type="button" role="tab" aria-controls="pills-monthly" aria-selected="false">Monthly dialysis</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button" role="tab" aria-controls="pills-users" aria-selected="false">Users</button>
   </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
@@ -203,8 +216,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
                     <th scope="col">Haemoglobin</th>
-                    <th scope="col">Creatinine</th>
-                    <th scope="col">Potassium</th>
+                    <th scope="col">Temperature</th>
+                    <th scope="col">Oxygen saturation</th>
                     <th scope="col">Date</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -219,8 +232,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <th class="table-col"><?php echo $monthly['body_weight']." kg"?></th>
                         <th class="table-col"><?php echo $monthly['blood_pressure']." mm Hg"?></th>
                         <th class="table-col"><?php echo $monthly['haemoglobin']." g/dL"?></th>
-                        <th class="table-col"><?php echo $monthly['creatinine']." mg/dL"?></th>
-                        <th class="table-col"><?php echo $monthly['potassium']." mEq/L"?></th>
+                        <th class="table-col"><?php echo $monthly['temperature']."°C"?></th>
+                        <th class="table-col"><?php echo $monthly['oxygen_saturation']."%"?></th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($monthly['date']))?></th>
                         <th class="table-col">
                                 <a role="button" <?php echo "href=view_report.php?id=$health_id"  ?>
@@ -242,6 +255,53 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     </div>
 
   </div>
+<div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+    <!--  -->
+    <div class="card p-3 shadow-sm">
+            <table class="table align-middle datatable dt-responsive table-check" id="user-table"
+                    style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;">
+                <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Fullname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($allUsers as $allUser){
+                        $allUser_id = $allUser['ID'];
+                        ?>
+                        <tr>
+                        <th class="table-col"><?php echo $allUser['username']?></th>
+                        <th class="table-col text-capitalize"><?php echo $allUser['fullname']?></th>
+                        <th class="table-col"><?php echo $allUser['email']?></th>
+                        <th class="table-col"><?php echo $allUser['address']?></th>
+                        <th class="table-col"><?php echo $allUser['phone']?></th>
+                        <th class="table-col"><?php echo date('j M, Y', strtotime($allUser['dob']))?></th>
+                        <th class="table-col">
+                                <a role="button" <?php echo "href=view_user.php?id=$allUser_id"  ?>
+                                class="btn btn-sm btn-outline-primary" id="dropdownMenu2" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                </svg>    
+                                View
+                                </a>
+                            </th>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    <!--  -->
+</div>
 
 </div>
 </div>
@@ -372,6 +432,81 @@ if (session_id() != '' && isset($_SESSION["username"])) {
     </div>
   </div>
 </div>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New User</h5>
+      </div>
+      <div class="modal-body">
+      <form action="/PRMS/db/operations/newUserHandler.php" method="post" class="card p-3">
+        <!--  -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="type">Patient</label>
+                <select class="form-select form-select" name="type" id="type">
+                    <option value="admin">
+                    Administrator
+                    </option>
+                    <option value="nurse">
+                    Nurse
+                    </option>
+                    <option value="normal" selected>
+                    Normal
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="">Username</label>
+                <input type="text" name="username" class="form-control" id="username" required>
+            </div>
+        </div>
+        <!--  -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="">Fullname</label>
+                <input type="text" name="fullname" class="form-control" id="fullname" required> 
+            </div>
+            <div class="col-md-6">
+                <label for="">Password</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+            </div>
+        </div>
+        <!--  -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="">Email</label>
+                <input type="email" name="email" class="form-control" id="email" required>
+            </div>
+            <div class="col-md-6">
+                <label for="">Address</label>
+                <input type="text" name="address" class="form-control" id="address" required> 
+            </div>
+        </div>
+
+        <!--  -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="">Phone</label>
+                <input type="tel" name="phone" class="form-control" id="phone" required>
+            </div>
+            <div class="col-md-6">
+                <label for="">Date of Birth</label>
+                <input type="date" name="dob" class="form-control" id="dob" required> 
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-primary">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 $(document).ready(function() {
     $('#row1, #row2, #row3').hide();  
@@ -380,6 +515,7 @@ $(document).ready(function() {
     $('#before').DataTable();
     $('#after').DataTable();
     $('#monthly').DataTable();
+    $('#user-table').DataTable();
 
 
     $('#test_type').on('change', function() {

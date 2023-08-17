@@ -45,7 +45,7 @@ if(isset($_SESSION) && $_SESSION["type"]!="nurse") {
             ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-            <li><a class="dropdown-item" href="account.php">Update Account</a></li>
+            <!-- <li><a class="dropdown-item" href="account.php">Update Account</a></li> -->
             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
           </ul>
         </li>

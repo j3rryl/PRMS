@@ -165,8 +165,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                     <th scope="col">Body weight</th>
                     <th scope="col">Blood pressure</th>
                     <th scope="col">Haemoglobin</th>
-                    <th scope="col">Temperature</th>
-                    <th scope="col">Oxygen saturation</th>
+                    <th scope="col">Creatinine</th>
+                    <th scope="col">Potassium</th>
                     <th scope="col">Date</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -181,8 +181,8 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <th class="table-col"><?php echo $monthly['body_weight']." kg"?></th>
                         <th class="table-col"><?php echo $monthly['blood_pressure']." mm Hg"?></th>
                         <th class="table-col"><?php echo $monthly['haemoglobin']." g/dL"?></th>
-                        <th class="table-col"><?php echo $monthly['temperature']."°C"?></th>
-                        <th class="table-col"><?php echo $monthly['oxygen_saturation']."%"?></th>
+                        <th class="table-col"><?php echo $monthly['creatinine']." mg/dL"?></th>
+                        <th class="table-col"><?php echo $monthly['potassium']." mEq/L"?></th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($monthly['date']))?></th>
                         <th class="table-col">
                                 <a role="button" <?php echo "href=view_report.php?id=$health_id"  ?>

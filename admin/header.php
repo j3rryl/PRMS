@@ -1,8 +1,7 @@
 <?php
 session_start();
-
-if(isset($_SESSION) && $_SESSION["type"]!="normal") {
-  header('Location: /PRMS/user/unauthorized.php');
+if(isset($_SESSION) && $_SESSION["type"]!="admin") {
+  header('Location: /PRMS/admin/unauthorized.php');
 }
 ?>
 <!DOCTYPE html>

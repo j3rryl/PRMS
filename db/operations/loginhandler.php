@@ -23,13 +23,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if($row['type'] == 'nurse') {
                 header('Location: /PRMS/control/index.php'); // Redirect to admin dashboard
                 exit;
-            } elseif ($row['type'] == 'normal') {
+            } else if($row['type'] == 'admin') {
+                header('Location: /PRMS/admin/index.php'); // Redirect to admin dashboard
+                exit;
+            }else if($row['type'] == 'normal') {
                 // Your logging logic
                 $sql = "INSERT INTO log (user, time, date, type) VALUES (?, NOW(), CURDATE(), ?)";
                 $stmt = mysqli_prepare($conn, $sql);
                 mysqli_stmt_bind_param($stmt, "ss", $uname, $row['type']);
                 if (mysqli_stmt_execute($stmt)) {
-                    header('Location: /PRMS/user/index.php'); // Redirect to user dashboard
+                    header('Location: /PRMS/user/index.php'); 
                     exit;
                 } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);

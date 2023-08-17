@@ -36,10 +36,9 @@ if ($result->num_rows > 0) {
 // Storing session data
 $_SESSION["username"] = $uname;
 $_SESSION["type"] = "admin";
-        include'admin/admin.php';
+        include'admin/index.php';
 
-      }elseif ($type=='normal') {
-        // code...date_default_timezone_set("Asia/Calcutta"); $datew="hour minute : ";
+      } else if ($type=='normal') {
         $hourMin = date('h:i');
         $dte=date('Y-m-d');
         $sql = "INSERT INTO log (user, time, date, type)VALUES ('$uname',NOW(),DATE '$dte','$type')";
@@ -49,7 +48,7 @@ $_SESSION["type"] = "admin";
   // Storing session data
   $_SESSION["username"] = $uname;
   $_SESSION["type"] = "normal";
-          include'user/user.php';
+          include'user/index.php';
         } else {
           echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }

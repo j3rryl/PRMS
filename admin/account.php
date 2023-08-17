@@ -21,18 +21,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 }
  ?>
 <div class="mx-3 mt-5 card p-3">
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account Details</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit Account</button>
-  </li>
-</ul>
-
-<div class="tab-content container" id="pills-tabContent">
-  <div class="tab-pane fade show active card p-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-  <?php 
+<?php 
       if (isset($_SESSION['success_message'])) { 
       ?>
       <div class="alert alert-success mt-3" role="alert">
@@ -53,6 +42,18 @@ if (session_id() != '' && isset($_SESSION["username"])) {
         <?php 
         }
       ?>
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Account Details</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit Account</button>
+  </li>
+</ul>
+
+<div class="tab-content container" id="pills-tabContent">
+  <div class="tab-pane fade show active card p-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+  
   <div class="row">
     <div class="col-md-4">
       <h6 for="form-label">Username</h6>
@@ -84,29 +85,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 <div class="tab-pane fade card p-3" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 <!--  -->
 <form action="/PRMS/db/operations/updateAccountHandler.php" method="post">
-    <?php 
-      if (isset($_SESSION['success_message'])) { 
-      ?>
-      <div class="alert alert-success mt-3" role="alert">
-          <?php 
-          echo $_SESSION['success_message']; 
-          unset($_SESSION['success_message']);
-          ?>
-      </div>
-      <?php 
-      } else if (isset($_SESSION['error_message'])) { 
-        ?>
-        <div class="alert alert-danger mt-3" role="alert">
-            <?php 
-            echo $_SESSION['error_message']; 
-            unset($_SESSION['error_message']);
-            ?>
-        </div>
-        <?php 
-        }
-      ?>
   <div class="row">
-  <input type="hidden" name="act" value="<?php echo $_SESSION["username"]; ?>"/>
     <div class="col-md-6">
       <label for="form-label">Username</label>
       <input type="text" class="form-control mb-3" readonly name="username" placeholder="Username" value="<?php echo $username; ?>" required/>
