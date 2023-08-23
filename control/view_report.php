@@ -33,6 +33,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   
 }
 ?>
+<link href="../print.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -72,6 +73,9 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 </style>
 
 <div class="mx-3 mt-5 card p-3 bg-white shadow-sm">
+<div class="d-flex justify-content-end mt-3">
+          <button id="printButton" type="button" class="btn btn-outline-primary print-hide">Print</button>
+        </div>
 <?php 
       if (isset($_SESSION['success_message'])) { 
       ?>
@@ -357,7 +361,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
               </div>
               <div class="col-md-4">
                 <h6 for="form-label">Blood Pressure</h6>
-                <p><?php echo $blood_pressure." mm Hg"; ?></p>
+                <p><?php echo $blood_pressure." /56"; ?></p>
                 <span class="text-capitalize status-color <?php 
                   if($blood_pressure<120){
                     echo "low";
@@ -600,7 +604,9 @@ if (session_id() != '' && isset($_SESSION["username"])) {
 
 <script>
 $(document).ready(function() {
-    $('#myTable').DataTable();
+    document.getElementById('printButton').addEventListener('click', function() {
+    window.print();
+});
 });
 </script>
 

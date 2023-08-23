@@ -32,6 +32,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   
 }
 ?>
+<link href="../print.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -75,9 +76,9 @@ if (session_id() != '' && isset($_SESSION["username"])) {
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Health Results</button>
   </li>
-  <li class="nav-item" role="presentation">
+  <!-- <li class="nav-item" role="presentation">
     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Miscellaneous</button>
-  </li>
+  </li> -->
 </ul>
 <div class="tab-content" id="pills-tabContent">
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -328,7 +329,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                 
               </div>
               <div class="col-md-4">
-                <h6 for="form-label">Blood Pressure</h6><?php echo $blood_pressure." mm Hg"; ?></p>
+                <h6 for="form-label">Blood Pressure</h6><?php echo $blood_pressure." /56"; ?></p>
                 <span class="text-capitalize status-color <?php 
                   if($blood_pressure<120){
                     echo "low";
@@ -451,16 +452,21 @@ if (session_id() != '' && isset($_SESSION["username"])) {
             <?php }?>
             <!--  -->
         </div>
+        <div class="d-flex justify-content-end mt-3">
+          <button id="printButton" type="button" class="btn btn-outline-primary print-hide">Print</button>
+        </div>
     </div>
   
   </div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Miscellaneous</div>
+  <!-- <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Miscellaneous</div> -->
 </div>
 </div>
 
 <script>
 $(document).ready(function() {
-    $('#myTable').DataTable();
+    document.getElementById('printButton').addEventListener('click', function() {
+    window.print();
+});
 });
 </script>
 

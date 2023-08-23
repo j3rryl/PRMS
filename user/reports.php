@@ -81,7 +81,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <tr>
                         <!-- <th scope="col">Name</th> -->
                         <th class="table-col"><?php echo $before['body_weight']." kg"?></th>
-                        <th class="table-col"><?php echo $before['blood_pressure']." mm Hg"?></th>
+                        <th class="table-col"><?php echo $before['blood_pressure']." /56"?></th>
                         <th class="table-col"><?php echo $before['haemoglobin']." g/dL"?></th>
                         <th class="table-col"><?php echo $before['temperature']."°C"?></th>
                         <th class="table-col"><?php echo $before['oxygen_saturation']."%"?></th>
@@ -129,7 +129,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <tr>
                         <!-- <th scope="col">Name</th> -->
                         <th class="table-col"><?php echo $after['body_weight']." kg"?></th>
-                        <th class="table-col"><?php echo $after['blood_pressure']." mm Hg"?></th>
+                        <th class="table-col"><?php echo $after['blood_pressure']." /56"?></th>
                         <th class="table-col"><?php echo $after['heart_rate']." bpm"?></th>
                         <th class="table-col"><?php echo date('j M, Y', strtotime($after['date']))?></th>
                         <th class="table-col">
@@ -179,7 +179,7 @@ if (session_id() != '' && isset($_SESSION["username"])) {
                         <tr>
                         <!-- <th scope="col">Name</th> -->
                         <th class="table-col"><?php echo $monthly['body_weight']." kg"?></th>
-                        <th class="table-col"><?php echo $monthly['blood_pressure']." mm Hg"?></th>
+                        <th class="table-col"><?php echo $monthly['blood_pressure']." /56"?></th>
                         <th class="table-col"><?php echo $monthly['haemoglobin']." g/dL"?></th>
                         <th class="table-col"><?php echo $monthly['creatinine']." mg/dL"?></th>
                         <th class="table-col"><?php echo $monthly['potassium']." mEq/L"?></th>

@@ -1,0 +1,22 @@
+@media print {
+    /* Force all Bootstrap columns to behave like they would on larger screens for print */
+    .row .col, 
+    .row .col-1, .row .col-2, .row .col-3, .row .col-4, .row .col-5, .row .col-6,
+    .row .col-7, .row .col-8, .row .col-9, .row .col-10, .row .col-11, .row .col-12,
+    .row .col-sm, .row .col-sm-1, .row .col-sm-2, .row .col-sm-3, .row .col-sm-4, .row .col-sm-5,
+    .row .col-sm-6, .row .col-sm-7, .row .col-sm-8, .row .col-sm-9, .row .col-sm-10, .row .col-sm-11,
+    .row .col-sm-12, .row .col-md, .row .col-md-1, .row .col-md-2, .row .col-md-3, .row .col-md-4,
+    .row .col-md-5, .row .col-md-6, .row .col-md-7, .row .col-md-8, .row .col-md-9, .row .col-md-10,
+    .row .col-md-11, .row .col-md-12 {
+        float: left;
+    }
+
+    .row .col-md-4 {
+        width: 33.33333%; /* Equivalent to 4 out of 12 columns */
+    }
+    .print-hide, .navbar, ul{
+        display: none !important;
+    }
+
+    /* You can continue for other column sizes as necessary, or just adjust for your specific needs */
+}
